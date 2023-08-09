@@ -93,30 +93,40 @@ app.post("/privateRoom", (req,res) => {
 
 // Join a random room
 app.post("/joinRandom", (req, res) => {
-    publicRoomsIndex = Math.floor(Math.random() * publicRooms.length);
-    var newRoomID = publicRooms[publicRoomsIndex];
-    console.log("Public rooms: " + publicRooms);
+    try {
+        console.log("Public rooms: " + publicRooms);
+        publicRoomsIndex = Math.floor(Math.random() * publicRooms.length);
+        var newRoomID = publicRooms[publicRoomsIndex];
 
-    x = 0;
-    while (x == 0) {
-        if (newRoomID == publicID) {
-            publicRoomsIndex = Math.floor(Math.random() * publicRooms.length);
-            var newRoomID = publicRooms[publicRoomsIndex];
+        // x = 0;
+        // while (x == 0) {
+        //     if (newRoomID == publicID) {
+        //         publicRoomsIndex = Math.floor(Math.random() * publicRooms.length);
+        //         var newRoomID = publicRooms[publicRoomsIndex];
+        //     }
+        //     else {
+        //         break;
+        //     }
+        // }
+        
+        if (publicRooms.length == 0 || newRoomID == null || newRoomID == publicID) {
+            console.log("Public rooms: " + publicRooms);
+            res.write("<p>No rooms found</p>");
+            res.write("<a href='/'>Back to main page</a><br>");
+            res.write('<link rel="stylesheet" href="style.css">');
+            res.end();
         }
         else {
-            break;
+            console.log("Public rooms: " + publicRooms);
+            res.redirect("/" + newRoomID);
         }
-    }
-    
-    if (publicRooms.length == 0 || newRoomID == null) {
+    } catch (error) {
         res.write("<p>No rooms found</p>");
         res.write("<a href='/'>Back to main page</a><br>");
         res.write('<link rel="stylesheet" href="style.css">');
         res.end();
     }
-    else {
-        res.redirect("/" + newRoomID);
-    }
+    
 
     console.log(allRooms);
 });
