@@ -54,13 +54,14 @@ io.on('connection', socket => {
             // io.sockets.emit("private-room");
         });
     })
+    
 });
 
 // Form to join a room from room id
 app.use(express.urlencoded({ extended: true }));
 app.post("/join", (req, res) => {
     var newRoomID = req.body["updateRoom"];
-    res.redirect(newRoomID);
+    res.redirect("/" + newRoomID);
 });
 
 // Set room to public
@@ -72,7 +73,7 @@ app.post("/publicRoom", (req,res) => {
     }
     else {
         publicRooms.push(publicID);
-        io.sockets.emit("public-room");
+        // io.sockets.emit("public-room");
     }
     console.log("Public rooms: " + publicRooms);
 
@@ -84,7 +85,7 @@ app.post("/privateRoom", (req,res) => {
     var y = publicRooms.indexOf(publicID);
     if (y >= 0) {   
         publicRooms.splice(y, 1);
-        io.sockets.emit("private-room");
+        // io.sockets.emit("private-room");
     }
 
     console.log("Public rooms: " + publicRooms);

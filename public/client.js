@@ -81,12 +81,9 @@ function addVideo (myVideo, stream) {
     videoGrid.append(myVideo);
 }
 
-//passes data to client
-socket.on("public-room", () => {
-    document.querySelector("#room-status").innerText = "Public Room";
-})
-socket.on("private-room", () => {
-    document.querySelector("#room-status").innerText = "Private Room";
-})
-
-var x = publicRooms.indexOf(publicID);
+// socket.on("public-room", () => {
+//     document.querySelector("#room-status").innerText = "Public Room";
+// })
+// socket.on("private-room", () => {
+//     document.querySelector("#room-status").innerText = "Private Room";
+// })
