@@ -55,12 +55,12 @@ navigator.mediaDevices.getUserMedia({
         }
     })
 
-    socket.on("public-room", () => {
-        document.querySelector("#room-status").innerText = "Public Room";
-    })
-    socket.on("private-room", () => {
-        document.querySelector("#room-status").innerText = "Private Room";
-    })
+    // socket.on("public-room", () => {
+    //     document.querySelector("#room-status").innerText = "Public Room";
+    // })
+    // socket.on("private-room", () => {
+    //     document.querySelector("#room-status").innerText = "Private Room";
+    // })
     
 });
 

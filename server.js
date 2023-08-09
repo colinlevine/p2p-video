@@ -51,7 +51,7 @@ io.on('connection', socket => {
             const index2 = publicRooms.indexOf(roomID)
             publicRooms.splice(index2, 1);
             console.log(allRooms);
-            io.sockets.emit("private-room");
+            // io.sockets.emit("private-room");
         });
     })
 });
@@ -71,7 +71,7 @@ app.post("/publicRoom", (req,res) => {
     }
     else {
         publicRooms.push(publicID);
-        io.sockets.emit("public-room");
+        // io.sockets.emit("public-room");
     }
     console.log("Public rooms: " + publicRooms);
     });
@@ -81,7 +81,7 @@ app.post("/privateRoom", () => {
     var y = publicRooms.indexOf(publicID);
     if (y >= 0) {   
         publicRooms.splice(y, 1);
-        io.sockets.emit("private-room");
+        // io.sockets.emit("private-room");
     }
 
     console.log("Public rooms: " + publicRooms);
@@ -112,7 +112,7 @@ app.post("/joinRandom", (req, res) => {
     else {
         res.redirect("/" + newRoomID);
         // allRooms.splice(index, 1);
-        io.sockets.emit("public-room");
+        // io.sockets.emit("public-room");
     }
     // console.log(allRooms);
 });
