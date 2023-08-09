@@ -63,6 +63,7 @@ app.post("/join", (req, res) => {
     res.redirect(newRoomID);
 });
 
+// Set room to public
 app.post("/publicRoom", (req,res) => {
     // prevents duplicate rooms
     var x = publicRooms.indexOf(publicID);
@@ -77,6 +78,7 @@ app.post("/publicRoom", (req,res) => {
 
     });
 
+// Set room to private 
 app.post("/privateRoom", (req,res) => {
     // prevents duplicate rooms
     var y = publicRooms.indexOf(publicID);
@@ -96,7 +98,7 @@ app.post("/joinRandom", (req, res) => {
 
     x = 0;
     while (x == 0) {
-        if (newRoomID == publicID || newRoomID == null) {
+        if (newRoomID == publicID) {
             publicRoomsIndex = Math.floor(Math.random() * publicRooms.length);
             var newRoomID = publicRooms[publicRoomsIndex];
         }
@@ -105,7 +107,7 @@ app.post("/joinRandom", (req, res) => {
         }
     }
     
-    if (publicRooms.length == 0) {
+    if (publicRooms.length == 0 || newRoomID == null) {
         res.write("<p>No rooms found</p>");
         res.write("<a href='/'>Back to main page</a><br>");
         res.write('<link rel="stylesheet" href="style.css">');
