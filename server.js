@@ -71,17 +71,18 @@ app.post("/publicRoom", (req,res) => {
     }
     else {
         publicRooms.push(publicID);
-        // io.sockets.emit("public-room");
+        io.sockets.emit("public-room");
     }
     console.log("Public rooms: " + publicRooms);
+
     });
 
-app.post("/privateRoom", () => {
+app.post("/privateRoom", (req,res) => {
     // prevents duplicate rooms
     var y = publicRooms.indexOf(publicID);
     if (y >= 0) {   
         publicRooms.splice(y, 1);
-        // io.sockets.emit("private-room");
+        io.sockets.emit("private-room");
     }
 
     console.log("Public rooms: " + publicRooms);
@@ -91,18 +92,19 @@ app.post("/privateRoom", () => {
 app.post("/joinRandom", (req, res) => {
     publicRoomsIndex = Math.floor(Math.random() * publicRooms.length);
     var newRoomID = publicRooms[publicRoomsIndex];
+    console.log("Public rooms: " + publicRooms);
+
     x = 0;
     while (x == 0) {
         if (newRoomID == publicID || newRoomID == null) {
             publicRoomsIndex = Math.floor(Math.random() * publicRooms.length);
             var newRoomID = publicRooms[publicRoomsIndex];
         }
-        else{
-            break
+        else {
+            break;
         }
     }
     
-    console.log("Public rooms: " + publicRooms);
     if (publicRooms.length == 0) {
         res.write("<p>No rooms found</p>");
         res.write("<a href='/'>Back to main page</a><br>");
@@ -111,10 +113,9 @@ app.post("/joinRandom", (req, res) => {
     }
     else {
         res.redirect("/" + newRoomID);
-        // allRooms.splice(index, 1);
-        // io.sockets.emit("public-room");
     }
-    // console.log(allRooms);
+
+    console.log(allRooms);
 });
 
 

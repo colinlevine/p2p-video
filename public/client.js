@@ -55,14 +55,23 @@ navigator.mediaDevices.getUserMedia({
         }
     })
 
-    // socket.on("public-room", () => {
-    //     document.querySelector("#room-status").innerText = "Public Room";
-    // })
-    // socket.on("private-room", () => {
-    //     document.querySelector("#room-status").innerText = "Private Room";
-    // })
+    
     
 });
+
+// Prevents page from refreshing
+$(document).ready(function () {
+    $("#publicR").click(function () {
+       $.post("/publicRoom", () => {
+          });
+    });
+ });
+$(document).ready(function () {
+    $("#privateR").click(function () {
+       $.post("/privateRoom", () => {
+          });
+    });
+ });
 
 function addVideo (myVideo, stream) {
     myVideo.srcObject = stream;
@@ -72,3 +81,12 @@ function addVideo (myVideo, stream) {
     videoGrid.append(myVideo);
 }
 
+//passes data to client
+socket.on("public-room", () => {
+    document.querySelector("#room-status").innerText = "Public Room";
+})
+socket.on("private-room", () => {
+    document.querySelector("#room-status").innerText = "Private Room";
+})
+
+var x = publicRooms.indexOf(publicID);
