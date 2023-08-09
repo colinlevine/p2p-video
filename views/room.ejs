@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const clientRoomID = "<%= roomID %>";
+        var allRooms = "<%= allRooms %>";
+    </script>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Peer to Peer Video</h1>
+    <p>Share the Room ID: <br><%= roomID %></p>
+    <div id="video-grid"></div>
+    <p id="room-status">Private Room</p>
+
+    <form action="/join" method="POST">
+        <!-- <label for="join-room">Join a Room:</label> -->
+        <input placeholder="Enter Room ID" type="text" id="updateRoom" name="updateRoom" required style="width: 14rem;">
+        <input type="submit" value="Join" style="margin-left: 0.3rem; width: 5rem;">
+    </form><br>
+
+    <form action="/joinRandom" method="POST">
+        <label for="join-room-2"></label>
+        <input class="button" type="submit" value="Join Random Room">
+    </form>
+    <form action="/publicRoom" method="POST">
+        <input class="button" type="submit" value="Make the Room Public">
+    </form>
+    <form action="/privateRoom" method="POST">
+        <label for="private-room"></label>
+        <input class="button" type="submit" value="Make the Room Private">
+    </form>
+
+
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
