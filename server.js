@@ -14,7 +14,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get("/", (req, res) => {
-    res.redirect(`/${v4()}`) // creates room id
+    res.redirect(`/${v4()}`) // Creates room id
 });
 
 app.get("/:room", (req, res) => {
@@ -23,10 +23,9 @@ app.get("/:room", (req, res) => {
 
 io.on('connection', socket => {
     socket.on('join-room', (roomID, userID) => {
-        // console.log(roomID, userID);
         publicID = roomID;
 
-        // prevents duplicate rooms
+        // Prevents duplicate rooms
         var x = allRooms.indexOf(roomID);
         if (x >= 0) {   
             // console.log("Room exists");
@@ -34,20 +33,18 @@ io.on('connection', socket => {
         else {
             allRooms.push(roomID); // Adds room id to list of open rooms
         }
-        // console.log("All rooms: " + allRooms);
+        console.log("Rooms: " + allRooms);
 
         
-        console.log(allRooms);
         socket.join(roomID);
         socket.to(roomID).emit("user-connected", userID);
 
         socket.on("disconnect", (req, res) => {
             socket.to(roomID).emit("user-disconnected", userID);
-            // Removes user id from list when a user disconnects
+            // Removes room id from list when a user disconnects
             const index = allRooms.indexOf(roomID)
             allRooms.splice(index, 1);
-            console.log(allRooms);
-            // io.sockets.emit("private-room");
+            console.log("Rooms: " + allRooms);
         });
     })
     

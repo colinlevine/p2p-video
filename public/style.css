@@ -1,8 +1,8 @@
 body {
     font-family: sans-serif, Helvetica;
     margin: 1rem;
-    color: #466d4b;
-    background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+    color: #ffffff;
+    background-color: #466d4b;
 }
 #video-grid {
     display: grid;
@@ -15,7 +15,7 @@ video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border: .5rem #466d4b solid;
+    border: .25rem #38573c solid;
     border-radius: 2rem;
 }
 
@@ -31,5 +31,5 @@ form {
 }
 input {
     color: #466d4b;
-    border-color: #466d4b;
+    border-color: #ffffff;
 }

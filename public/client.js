@@ -27,18 +27,17 @@ navigator.mediaDevices.getUserMedia({
 
     // Add secondary
     myPeer.on('call', call => {
-        call.answer(stream) // Adds second video to user 1
+        call.answer(stream)
         const video = document.createElement("video");
-        // video.style.marginLeft = "2.5rem";
-        call.on('stream', userVideoStream => { // Updates user 2 with user 1 video
+        call.on('stream', userVideoStream => { 
             addVideo(video, userVideoStream)
         })
     });
 
+    // User connects
     socket.on("user-connected", userID => {
         const call = myPeer.call(userID, stream);
         const video = document.createElement("video");
-        // video.style.marginLeft = "2.5rem";
         call.on("stream", userVideoStream => {
             addVideo(video, userVideoStream);
         })
@@ -49,6 +48,7 @@ navigator.mediaDevices.getUserMedia({
         peers[userID] = call;
     });
 
+    //User disconnects
     socket.on("user-disconnected", userID => {
         if (peers[userID]) {
             peers[userID].close();
