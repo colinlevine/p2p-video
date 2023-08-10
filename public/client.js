@@ -29,7 +29,7 @@ navigator.mediaDevices.getUserMedia({
     myPeer.on('call', call => {
         call.answer(stream) // Adds second video to user 1
         const video = document.createElement("video");
-        video.style.marginLeft = "2.5rem";
+        // video.style.marginLeft = "2.5rem";
         call.on('stream', userVideoStream => { // Updates user 2 with user 1 video
             addVideo(video, userVideoStream)
         })
@@ -38,7 +38,7 @@ navigator.mediaDevices.getUserMedia({
     socket.on("user-connected", userID => {
         const call = myPeer.call(userID, stream);
         const video = document.createElement("video");
-        video.style.marginLeft = "2.5rem";
+        // video.style.marginLeft = "2.5rem";
         call.on("stream", userVideoStream => {
             addVideo(video, userVideoStream);
         })
@@ -54,24 +54,9 @@ navigator.mediaDevices.getUserMedia({
             peers[userID].close();
         }
     })
-
-    
     
 });
 
-// Prevents page from refreshing
-$(document).ready(function () {
-    $("#publicR").click(function () {
-       $.post("/publicRoom", () => {
-          });
-    });
- });
-$(document).ready(function () {
-    $("#privateR").click(function () {
-       $.post("/privateRoom", () => {
-          });
-    });
- });
 
 function addVideo (myVideo, stream) {
     myVideo.srcObject = stream;
@@ -80,10 +65,3 @@ function addVideo (myVideo, stream) {
     });
     videoGrid.append(myVideo);
 }
-
-// socket.on("public-room", () => {
-//     document.querySelector("#room-status").innerText = "Public Room";
-// })
-// socket.on("private-room", () => {
-//     document.querySelector("#room-status").innerText = "Private Room";
-// })

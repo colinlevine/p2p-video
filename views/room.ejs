@@ -12,33 +12,17 @@
 </head>
 <body>
     <h1>Peer to Peer Video</h1>
-    <p>Share the Room ID: <br><%= roomID %></p>
+    <p>Share Room ID: <br><%= roomID %></p>
     <div id="video-grid"></div>
-    <p id="room-status">Rooms are private by default.</p>
 
     <form action="/join" method="POST">
         <label for="join-room">Join a Room:</label>
         <input placeholder="Enter Room ID" type="text" id="updateRoom" name="updateRoom" required style="width: 14rem;">
         <input type="submit" value="Join" style="margin-left: 0.3rem; width: 5rem;">
-    </form><br>
-
-    <form action="/joinRandom" method="POST">
-        <label for="join-room-2"></label>
-        <input class="button" type="submit" value="Join Random Room">
     </form>
-
-    <button class="button" id="publicR">Make the Room Public</button><br>
-
-    <button class="button" id="privateR">Make the Room Private</button>
-
 
     <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity=
-        "sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
-        crossorigin="anonymous">
-    </script>
     <script src="client.js"></script>
     
 </body>

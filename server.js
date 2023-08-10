@@ -6,7 +6,6 @@ const io = require("socket.io")(server);
 const { v4 } = require("uuid")
 const port = process.env.PORT || 3000;
 var allRooms = [];
-var publicRooms = [];
 var publicID = null;
 
 
@@ -15,7 +14,6 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get("/", (req, res) => {
-    console.log("Public rooms: " + publicRooms);
     res.redirect(`/${v4()}`) // creates room id
 });
 
@@ -48,8 +46,6 @@ io.on('connection', socket => {
             // Removes user id from list when a user disconnects
             const index = allRooms.indexOf(roomID)
             allRooms.splice(index, 1);
-            const index2 = publicRooms.indexOf(roomID)
-            publicRooms.splice(index2, 1);
             console.log(allRooms);
             // io.sockets.emit("private-room");
         });
@@ -63,74 +59,6 @@ app.post("/join", (req, res) => {
     var newRoomID = req.body["updateRoom"];
     res.redirect("/" + newRoomID);
 });
-
-// Set room to public
-app.post("/publicRoom", (req,res) => {
-    // prevents duplicate rooms
-    var x = publicRooms.indexOf(publicID);
-    if (x >= 0) {   
-        // console.log("Room exists")
-    }
-    else {
-        publicRooms.push(publicID);
-        // io.sockets.emit("public-room");
-    }
-    console.log("Public rooms: " + publicRooms);
-
-    });
-
-// Set room to private 
-app.post("/privateRoom", (req,res) => {
-    // prevents duplicate rooms
-    var y = publicRooms.indexOf(publicID);
-    if (y >= 0) {   
-        publicRooms.splice(y, 1);
-        // io.sockets.emit("private-room");
-    }
-
-    console.log("Public rooms: " + publicRooms);
-});
-
-// Join a random room
-app.post("/joinRandom", (req, res) => {
-    try {
-        console.log("Public rooms: " + publicRooms);
-        publicRoomsIndex = Math.floor(Math.random() * publicRooms.length);
-        var newRoomID = publicRooms[publicRoomsIndex];
-
-        // x = 0;
-        // while (x == 0) {
-        //     if (newRoomID == publicID) {
-        //         publicRoomsIndex = Math.floor(Math.random() * publicRooms.length);
-        //         var newRoomID = publicRooms[publicRoomsIndex];
-        //     }
-        //     else {
-        //         break;
-        //     }
-        // }
-        
-        if (publicRooms.length == 0 || newRoomID == null || newRoomID == publicID) {
-            console.log("Public rooms: " + publicRooms);
-            res.write("<p>No rooms found</p>");
-            res.write("<a href='/'>Back to main page</a><br>");
-            res.write('<link rel="stylesheet" href="style.css">');
-            res.end();
-        }
-        else {
-            console.log("Public rooms: " + publicRooms);
-            res.redirect("/" + newRoomID);
-        }
-    } catch (error) {
-        res.write("<p>No rooms found</p>");
-        res.write("<a href='/'>Back to main page</a><br>");
-        res.write('<link rel="stylesheet" href="style.css">');
-        res.end();
-    }
-    
-
-    console.log(allRooms);
-});
-
 
 
 server.listen(port, () => {
